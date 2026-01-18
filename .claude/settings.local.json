@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(bun install:*)",
+      "Bash(pip install:*)",
+      "Bash(curl:*)",
+      "Bash(python -m json.tool:*)"
+    ]
+  }
+}

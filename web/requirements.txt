@@ -1,0 +1,21 @@
+# HeartMuLa Web UI Backend Dependencies
+
+# Web framework
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+
+# Settings
+pydantic-settings>=2.1.0
+
+# LLM integration
+openai>=1.10.0
+anthropic>=0.18.0
+
+# Async support
+httpx>=0.26.0
+
+# Already required by heartlib
+# torch
+# torchaudio
+# transformers
+# tokenizers

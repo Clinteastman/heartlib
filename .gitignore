@@ -1,10 +1,54 @@
-__pycache__/
-**.pyc
-checkpoint/
+# General
 .DS_Store
-**.wav
-**.mp3
-.vscode/
-**.egg-info/
+.env
+*.log
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.venv/
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+dist/
 build/
+.coverage
+coverage.xml
+
+# Node / Web
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Models & Checkpoints (Large Files)
+ckpt/
+checkpoint/
+checkpoints/
+models/
+loras/
+downloads/
+*.ckpt
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.onnx
+*.gguf
+*.h5
+*.weights
+
+# Audio / Media
+*.wav
+*.mp3
+*.flac
+
+# IDEs
+.vscode/
 .idea/
+
+# Project specific
+web/output/

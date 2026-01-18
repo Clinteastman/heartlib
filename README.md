@@ -62,11 +62,32 @@ Our latest internal version of HeartMuLa-7B achieves **comparable performance wi
 
 ### ⚙️ Environment Setup
 
-We recommend using `python=3.10` for local deployment.
+We recommend using `python=3.10` for local deployment. **Python 3.13+ is not currently supported** due to PyTorch compatibility.
 
-Clone this repo and install locally.
+#### Option 1: Conda (Recommended for Windows)
 
+```bash
+# Create conda environment with Python 3.10
+conda create -n heartmula python=3.10 -y
+conda activate heartmula
+
+# Install PyTorch with CUDA support (adjust cu124 to match your CUDA version)
+# For CUDA 12.4:
+pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cu124
+
+# For CUDA 11.8:
+# pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cu118
+
+# Install heartlib
+pip install -e .
+
+# Optional: Install Triton for Windows (enables kernel optimizations)
+pip install triton-windows
 ```
+
+#### Option 2: pip (Linux/macOS)
+
+```bash
 git clone https://github.com/HeartMuLa/heartlib.git
 cd heartlib
 pip install -e .
@@ -165,6 +186,71 @@ Every single day
 Our different tags are comma-separated without spaces as illustrated below:
 ```txt
 piano,happy,wedding,synthesizer,romantic
+```
+
+---
+
+## 🌐 Web UI
+
+HeartMuLa includes a modern web interface for generating music with an intuitive UI.
+
+### Features
+- **AI Lyrics Generator**: Generate professional song lyrics using LLM (OpenAI, Anthropic, or local Ollama)
+- **Visual Tag Selector**: Choose from preset instrument, mood, genre, and vocal tags
+- **Real-time Progress**: Watch generation progress with Server-Sent Events
+- **Built-in Audio Player**: Listen and download generated music
+- **Model Management**: Automatically download models if not present
+
+### Quick Start
+
+> **Prerequisites**: Make sure you've completed the [Environment Setup](#️-environment-setup) above first, including installing the `heartmula` conda environment.
+
+```bash
+# Install bun (if not installed)
+# https://bun.sh
+
+# Navigate to web directory
+cd web
+
+# Install frontend dependencies
+bun run install:frontend
+
+# Check/download models (or use the UI)
+bun run check:models
+bun run download:models  # if needed
+
+# Start both backend and frontend
+bun run dev
+```
+
+The UI will be available at `http://localhost:5173`
+
+> **Note**: The backend automatically uses the `heartmula` conda environment. If you used a different environment name, update the `dev:backend` script in `web/package.json`.
+
+### Configuration
+
+1. **API Keys**: Go to Settings tab in the UI to configure your LLM provider:
+   - **OpenAI**: Get API key from [platform.openai.com](https://platform.openai.com)
+   - **Anthropic**: Get API key from [console.anthropic.com](https://console.anthropic.com)
+   - **Ollama**: No API key needed (runs locally)
+
+2. **Environment Variables** (optional): Create `web/.env` file:
+   ```env
+   OPENAI_API_KEY=your-key-here
+   MODEL_PATH=./ckpt
+   MODEL_VERSION=3B
+   ```
+
+### Manual Start
+
+```bash
+# Backend only
+cd web
+python -m uvicorn backend.main:app --reload --port 8000
+
+# Frontend only (in another terminal)
+cd web/frontend
+bun run dev
 ```
 
 ---

@@ -1,0 +1,25 @@
+{
+  "name": "heartmula-web",
+  "version": "1.0.0",
+  "description": "HeartMuLa Web UI - AI Music Generation",
+  "scripts": {
+    "dev": "concurrently --names backend,frontend --prefix-colors cyan,magenta \"bun run dev:backend\" \"bun run dev:frontend\"",
+    "dev:backend": "cd .. && conda run -n heartmula --no-capture-output python -m uvicorn web.backend.main:app --reload --host 0.0.0.0 --port 8000 --timeout-keep-alive 600 --no-access-log --reload-exclude ckpt --reload-exclude .cache --reload-exclude output --reload-exclude __pycache__ --reload-exclude node_modules",
+    "dev:frontend": "cd frontend && bun run dev",
+    "build": "cd frontend && bun run build",
+    "start": "concurrently --names backend,frontend --prefix-colors cyan,magenta \"bun run start:backend\" \"bun run serve:frontend\"",
+    "start:backend": "cd .. && conda run -n heartmula --no-capture-output python -m uvicorn web.backend.main:app --host 0.0.0.0 --port 8000",
+    "serve:frontend": "cd frontend && bun run preview",
+    "install:frontend": "cd frontend && bun install",
+    "install:backend": "pip install -r requirements.txt",
+    "install:all": "bun run install:frontend && bun run install:backend",
+    "check:models": "bun run scripts/check-models.ts",
+    "download:models": "bun run scripts/download-models.ts",
+    "setup": "bun run install:all && bun run check:models"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.9",
+    "bun-types": "latest",
+    "concurrently": "^9.2.1"
+  }
+}
